@@ -49,4 +49,4 @@ This is the primary mode for these experiments. glslViewer provides:
     gl_FragColor — output color
 
 ---
- in/out of field with mouse!
+Move in/out of field with mouse!
