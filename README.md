@@ -25,6 +25,11 @@ Requirements:
 
 Run:
 
+First run:
+create_grass_field.py and chooose GRID_SIZE and SPACING...then run said file to generate a grass_field.obj
+
+Next run:
+
 glslViewer grass.vert grass.frag grass_field.obj
 
 Use -l (--life-coding) flag to keep the window open and reloads the shader every time you save the file.
@@ -44,7 +49,4 @@ This is the primary mode for these experiments. glslViewer provides:
     gl_FragColor — output color
 
 ---
-
-If wanting to change field size, first run create_grass_field.py and change GRID_SIZE and SPACING...then run said file to generate a grass_field.obj
-
-Move and zoom in/out of field with mouse!
+ in/out of field with mouse!
