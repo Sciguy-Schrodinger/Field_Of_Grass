@@ -8,8 +8,8 @@ import random
 INPUT_FILE = "grass.obj"
 OUTPUT_FILE = "grass_field.obj"
 
-GRID_SIZE = 100
-SPACING = 0.5
+GRID_SIZE = int(input("What grid size do you want? "))
+SPACING = float(input("What spacing between grass blades do you want? "))
 
 # --------------------------------------------------
 # Load the original OBJ
@@ -51,9 +51,7 @@ with open(INPUT_FILE, "r") as file:
                 vertex_index = int(indices[0]) - 1
                 normal_index = int(indices[2]) - 1
 
-                face.append(
-                    (vertex_index, normal_index)
-                )
+                face.append((vertex_index, normal_index))
 
             faces.append(face)
 
@@ -69,15 +67,9 @@ with open(OUTPUT_FILE, "w") as file:
         for z in range(GRID_SIZE):
 
             # Random position inside this grid cell
-            offset_x = (
-                x * SPACING
-                + random.uniform(-0.25, 0.25)
-            )
+            offset_x = (x * SPACING + random.uniform(-0.25, 0.25))
 
-            offset_z = (
-                z * SPACING
-                + random.uniform(-0.25, 0.25)
-            )
+            offset_z = (z * SPACING + random.uniform(-0.25, 0.25))
 
             # Random rotation around the Y axis
             angle = random.uniform(0.0, 2.0 * math.pi)
@@ -89,51 +81,31 @@ with open(OUTPUT_FILE, "w") as file:
             scale = random.uniform(0.8, 1.2)
 
             # Current OBJ index offsets
-            vertex_offset = len(vertices) * (
-                x * GRID_SIZE + z
-            )
+            vertex_offset = len(vertices) * (x * GRID_SIZE + z)
 
-            normal_offset = len(normals) * (
-                x * GRID_SIZE + z
-            )
+            normal_offset = len(normals) * (x * GRID_SIZE + z)
 
             # Transform and write vertices
             for vx, vy, vz in vertices:
 
-                rx = (
-                    vx * cos_angle
-                    + vz * sin_angle
-                )
+                rx = (vx * cos_angle + vz * sin_angle)
 
-                rz = (
-                    -vx * sin_angle
-                    + vz * cos_angle
-                )
+                rz = (-vx * sin_angle + vz * cos_angle)
 
                 rx = rx * scale + offset_x
                 ry = vy * scale
                 rz = rz * scale + offset_z
 
-                file.write(
-                    f"v {rx} {ry} {rz}\n"
-                )
+                file.write(f"v {rx} {ry} {rz}\n")
 
             # Transform and write normals
             for nx, ny, nz in normals:
 
-                rx = (
-                    nx * cos_angle
-                    + nz * sin_angle
-                )
+                rx = (nx * cos_angle + nz * sin_angle)
 
-                rz = (
-                    -nx * sin_angle
-                    + nz * cos_angle
-                )
+                rz = (-nx * sin_angle + nz * cos_angle)
 
-                file.write(
-                    f"vn {rx} {ny} {rz}\n"
-                )
+                file.write(f"vn {rx} {ny} {rz}\n")
 
             # Write faces using the new indices
             for face in faces:
@@ -145,12 +117,8 @@ with open(OUTPUT_FILE, "w") as file:
                     new_vi = vertex_offset + vi + 1
                     new_ni = normal_offset + ni + 1
 
-                    face_string.append(
-                        f"{new_vi}//{new_ni}"
-                    )
+                    face_string.append(f"{new_vi}//{new_ni}")
 
-                file.write(
-                    "f " + " ".join(face_string) + "\n"
-                )
+                file.write("f " + " ".join(face_string) + "\n")
 
 print("Grass field generated!")
